@@ -1,0 +1,19 @@
+{
+  "name": "immutable-stringify",
+  "version": "1.0.0",
+  "description": "Serialize and unserialize immutable list | map | record. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "immutable",
+    "serialize",
+    "json"
+  ],
+  "dependencies": {
+    "immutable": "^3.8.1"
+  },
+  "author": "buhi",
+  "license": "MIT"
+}
