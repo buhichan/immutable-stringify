@@ -68,7 +68,7 @@ function hydrateImmutable(immu){
         }
         if(immu[isImmuRecord]){
             delete immu[isImmuRecord];
-            const Rec = Record(immu);
+            const Rec = Immutable.Record(immu);
             immu = new Rec();
         }
         return immu;
@@ -79,4 +79,4 @@ function hydrateImmutable(immu){
 module.exports = {
     dehydrateImmutable,
     hydrateImmutable
-}
+};
