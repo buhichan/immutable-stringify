@@ -18,12 +18,12 @@ function dehydrateImmutable(immu){ //Support Only Record, Map and List
             immu = immu.toObject();
             immu[isImmuRecord] = true;
         }
-        Object.keys(immu).forEach(key=>{
+        Object.keys(immu).forEach(function(key){
             immu[key] = prepare(immu[key]);
         });
         return immu;
     }
-    return JSON.stringify(prepare(immu),(key, value)=>{
+    return JSON.stringify(prepare(immu),function(key, value){
         if (value instanceof RegExp) {
             return '_PxEgEr_' + value;
         }
@@ -33,7 +33,7 @@ function dehydrateImmutable(immu){ //Support Only Record, Map and List
 
 function hydrateImmutable(immu){
     const iso8061 = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
-    const dehydrated = JSON.parse(immu,(key, value)=>{
+    const dehydrated = JSON.parse(immu,function(key, value){
         if (typeof value != 'string') {
             return value;
         }
@@ -59,7 +59,7 @@ function hydrateImmutable(immu){
             immu.pop();
             immu = Immutable.List(immu.map(revive));
         }
-        Object.keys(immu).forEach(key=>{
+        Object.keys(immu).forEach(function(key){
             immu[key] = revive(immu[key])
         });
         if(immu[isImmuMap]) {
@@ -77,6 +77,6 @@ function hydrateImmutable(immu){
 }
 
 module.exports = {
-    dehydrateImmutable,
-    hydrateImmutable
+    dehydrateImmutable:dehydrateImmutable,
+    hydrateImmutable:hydrateImmutable
 };
