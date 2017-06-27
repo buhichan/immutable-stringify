@@ -14,7 +14,7 @@ function dehydrateImmutable(immu){ //Support Only Record, Map and List
         } else if(Immutable.Map.isMap(immu)) {
             immu = (immu).toObject();
             immu[isImmuMap] = true;
-        } else if(immu.__proto__ instanceof Immutable.Record){
+        } else if(Immutable.Record.isRecord(immu)){
             immu = immu.toObject();
             immu[isImmuRecord] = true;
         }
