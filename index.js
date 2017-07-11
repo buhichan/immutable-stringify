@@ -1,7 +1,7 @@
 const isImmuRecord = "$$__IMMUTABLE_RECORD__$$";
 const isImmuList = "$$__IMMUTABLE_LIST__$$";
 const isImmuMap = "$$__IMMUTABLE_MAP__$$";
-
+const isImmuSet = "$$__IMMUTABLE_SET__$$";
 const Immutable = require('immutable');
 
 function dehydrateImmutable(immu){ //Support Only Record, Map and List
@@ -17,6 +17,9 @@ function dehydrateImmutable(immu){ //Support Only Record, Map and List
         } else if(Immutable.Record.isRecord(immu)){
             immu = immu.toObject();
             immu[isImmuRecord] = true;
+        } else if(Immutable.Set.isSet(immu)){
+            immu = immu.toArray();
+            immu.push(isImmuSet);
         }
         Object.keys(immu).forEach(function(key){
             immu[key] = prepare(immu[key]);
@@ -55,9 +58,14 @@ function hydrateImmutable(immu){
     function revive(immu){
         if(['number','string','undefined','boolean','symbol'].indexOf(typeof immu)>=0 || immu === null)
             return immu;
-        else if(immu instanceof Array && immu[immu.length-1] === isImmuList) {
-            immu.pop();
-            immu = Immutable.List(immu.map(revive));
+        else if(immu instanceof Array) {
+            if(immu[immu.length-1] === isImmuList){
+                immu.pop();
+                immu = Immutable.List(immu.map(revive));
+            } else if(immu[immu.length-1] === isImmuSet){
+                immu.pop();
+                immu = Immutable.Set(immu.map(revive));
+            }
         }
         Object.keys(immu).forEach(function(key){
             immu[key] = revive(immu[key])

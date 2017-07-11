@@ -1,6 +1,6 @@
 {
   "name": "immutable-stringify",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Serialize and unserialize immutable list | map | record. ",
   "main": "index.js",
   "scripts": {
