@@ -22,7 +22,8 @@ function dehydrateImmutable(immu){ //Support Only Record, Map and List
             immu.push(isImmuSet);
         }
         Object.keys(immu).forEach(function(key){
-            immu[key] = prepare(immu[key]);
+            if(typeof immu[key] !== "function")
+                immu[key] = prepare(immu[key]);
         });
         return immu;
     }
